@@ -1,9 +1,20 @@
 <template>
+  <ToggleTheame />
   <div class="container wrapper">
     <h1>Notepad</h1>
+    <!-- simple routes -->
+
+    <nav id="nav">
+      <ul>
+        <li><a href="/1">One</a></li>
+        <li><a href="/2">Two</a></li>
+      </ul>
+    </nav>
+    <router-view />
+
+    <!-- form -->
     <PostForm @formData="addPost" />
     <PostList :posts="posts" :remove="removePost" v-if="posts.length" />
-    
     <div v-else class="error">
       <h3>Posts not found.</h3>
       <MyButton @click="fetchPosts" v-if="!posts.length">Get post</MyButton>
@@ -18,12 +29,13 @@
 // import components
 import PostForm from "@/Components/PostForm.vue";
 import PostList from "@/Components/PostList.vue";
+import ToggleTheame from "@/Components/ToggleTheame.vue";
 
 // import UI element
 import MyButton from "@/UI/MyButton.vue";
 
 export default {
-  components: { PostList, PostForm, MyButton },
+  components: { PostList, PostForm, MyButton, ToggleTheame },
   data() {
     return {
       count: 101,
@@ -83,8 +95,8 @@ export default {
 :root {
   --bg-color: #fff;
   --bg-color-dark: #000;
-  --text-color: #fff;
-  --text-color-dark: #000;
+  --text-color: #000;
+  --text-color-dark: #fff;
   --color: red;
   --color2: green;
   --color3: blue;
@@ -111,7 +123,7 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 768px;
   margin: 0 auto;
 }
 
