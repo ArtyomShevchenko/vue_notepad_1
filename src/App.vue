@@ -81,10 +81,10 @@ export default {
 
 <style>
 :root {
-  --bg-color: red;
-  --bg-color-dark: black;
-  --text-color: black;
-  --text-color-dark: white;
+  --bg-color: #fff;
+  --bg-color-dark: #000;
+  --text-color: #fff;
+  --text-color-dark: #000;
   --color: red;
   --color2: green;
   --color3: blue;
