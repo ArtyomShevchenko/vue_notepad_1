@@ -1,17 +1,17 @@
 <template>
-  <ToggleTheame />
   <div class="container wrapper">
-    <h1>Notepad</h1>
-    <!-- simple routes -->
 
-    <nav id="nav">
-      <ul>
-        <li><a href="/1">One</a></li>
-        <li><a href="/2">Two</a></li>
-      </ul>
-    </nav>
-    <router-view />
+    <!-- test localstorage -->
+    <div>
+      <MyInput @keydown.enter="changeUserName" placeholder="Enter your name"/>
+      <p>Hello {{userName}}</p>
+    </div>
+    <!-- end test -->
 
+    <header>
+      <h1>Notepad</h1>
+      <ToggleTheame />
+    </header>
     <!-- form -->
     <PostForm @formData="addPost" />
     <PostList :posts="posts" :remove="removePost" v-if="posts.length" />
@@ -33,18 +33,24 @@ import ToggleTheame from "@/Components/ToggleTheame.vue";
 
 // import UI element
 import MyButton from "@/UI/MyButton.vue";
+import MyInput from "@/UI/MyInput.vue";
 
 export default {
-  components: { PostList, PostForm, MyButton, ToggleTheame },
+  components: { PostList, PostForm, MyButton, ToggleTheame, MyInput },
   data() {
     return {
       count: 101,
       posts: [],
       loading: true,
       loadingText: "Loading.",
+      userName: "",
     }
   },
   methods: {
+    changeUserName(event) {
+      this.userName = event.target.value
+      localStorage.userName = this.userName
+    },
     incrementCount() {
       this.count += 1
     },
@@ -87,6 +93,10 @@ export default {
     if (this.loading) {
       this.loadingStatus()
     }
+
+    if (localStorage.userName) {
+      this.userName = localStorage.userName;
+    }
   },
 }
 </script>
@@ -111,6 +121,14 @@ export default {
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
+  border-color: var(--color);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
 }
 
 .wrapper {
@@ -120,6 +138,7 @@ body {
 .dark-mode {
   background-color: var(--bg-color-dark);
   color: var(--text-color-dark);
+  border-color: var(--color2);
 }
 
 .container {

@@ -1,5 +1,7 @@
 <template>
-    <MyButton @click="toggle">Toggle</MyButton>
+    <MyButton @click="toggle">
+        {{ theme }}
+    </MyButton>
 </template>
 
 <script>
@@ -10,14 +12,30 @@ export default {
     components: { MyButton },
     data() {
         return {
-            count: 0
+            theme: "light-mode",
         }
     },
     methods: {
         toggle() {
-            document.body.classList.contains("dark-mode")
-                ? document.body.classList.remove("dark-mode")
-                : document.body.classList.add("dark-mode")
+            if (document.body.classList.contains("dark-mode")) {
+                document.body.classList.remove("dark-mode")
+                this.theme = "light-mode"
+            } else {
+                document.body.classList.add("dark-mode")
+                this.theme = "dark-mode"
+            }
+        }
+    },
+    mounted() {
+        if (localStorage.theme) {
+            document.body.classList.add(localStorage.theme)
+            console.log("mounted change", localStorage.theme)
+        }
+    },
+    watch: {
+        theme(newTheme) {
+            localStorage.theme = newTheme;
+            console.log("localStorage change", localStorage.theme)
         }
     }
 }

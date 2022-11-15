@@ -43,8 +43,8 @@ export default {
 <style scoped>
 section {
     padding: 0.5rem 0;
-    background-color: var(--bg-color);
-    border-bottom: 0.1rem solid var(--text-color);
+    background-color: inherit;
+    border-bottom: 0.1rem solid inherit;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -57,11 +57,13 @@ section b {
     font-size: 0.5rem;
 }
 
-div, h3 {
+div,
+h3 {
     word-break: break-all;
 }
 
-div::first-letter, h3::first-letter {
+div::first-letter,
+h3::first-letter {
     text-transform: uppercase;
 }
 </style>
