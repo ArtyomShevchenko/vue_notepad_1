@@ -2,7 +2,7 @@
     <div class="form-container">
         <form>
             <MyInput type="text" :value="data.title" @input="changeTitle" placeholder="Title" />
-            <MyTextarea :value="data.body" @input="changeBody" cols="30" rows="6" placeholder="Message">
+            <MyTextarea @keydown.enter="sendForm" :value="data.body" @input="changeBody" cols="30" rows="6" placeholder="Message">
             </MyTextarea>
             <MyButton @click="sendForm" :disabled="disabledButton" type="submit">
                 Send

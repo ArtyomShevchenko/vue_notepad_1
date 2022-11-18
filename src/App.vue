@@ -1,20 +1,18 @@
 <template>
   <div class="container wrapper">
-
-    <!-- test localstorage -->
-    <!-- <div>
-      <MyInput @keydown.enter="changeUserName" placeholder="Enter your name"/>
-      <p>Hello {{userName}}</p>
-    </div> -->
-    <!-- end test -->
-
     <header>
       <h1>Notepad</h1>
-      <ToggleTheame />
+      <MyButton 
+        @click="toggleTheameMode">
+          {{ themeMode === "light-mode" ? "Dark theme" : "Light theme" }}
+      </MyButton>
     </header>
     <!-- form -->
     <noteForm @formData="addNotes" />
-    <notesList :notes="notes" :remove="removePost" v-if="notes.length" />
+    <notesList 
+      :notes="notes" 
+      :remove="removePost" 
+      v-if="notes.length" />
     <div v-else class="error">
       <h3>Notes not found.</h3>
       <div v-if="loading">{{ loadingText }}</div>
@@ -27,21 +25,22 @@
 // import components
 import noteForm from "@/Components/noteForm.vue";
 import notesList from "@/Components/notesList.vue";
-import ToggleTheame from "@/Components/ToggleTheame.vue";
 
 // import UI element
+import MyButton from "@/UI/MyButton.vue";
 
 export default {
   components: {
     notesList,
     noteForm,
-    ToggleTheame,
+    MyButton,
   },
   data() {
     return {
       notes: [],
       loading: true,
       loadingText: "Loading.",
+      themeMode: "light-mode",
     }
   },
   methods: {
@@ -63,12 +62,27 @@ export default {
     },
     setLocalNotes() {
       localStorage.notes = JSON.stringify(this.notes)
+    },
+    toggleTheameMode() {
+      this.themeMode =
+        this.themeMode === "light-mode"
+          ? this.themeMode = "dark-mode"
+          : this.themeMode = "light-mode"
+
+      localStorage.themeMode = this.themeMode
     }
   },
   mounted() {
-
     if (this.loading) {
       this.loadingStatus()
+    }
+
+    if (this.themeMode) {
+      document.body.classList = this.themeMode
+    }
+
+    if (localStorage.themeMode) {
+      this.themeMode = localStorage.themeMode
     }
 
     if (localStorage.notes) {
@@ -77,27 +91,29 @@ export default {
       this.loadingStatus = false
     }
   },
+  watch: {
+    themeMode(newTheme) {
+      document.body.classList = newTheme
+    }
+  }
 }
 </script>
 
 <style>
-:root {
-  --bg-color: #fff;
-  --text-color: #000;
-  --border-color: red;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body,
-.light.theme {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  border-color: var(--color);
+.light-mode {
+  background-color: rgb(230, 255, 255);
+  color: rgb(0, 50, 50);
+}
+
+.dark-mode {
+  background-color: rgb(0, 50, 50);
+  color: rgb(230, 255, 255);
 }
 
 header {
@@ -109,12 +125,6 @@ header {
 
 .wrapper {
   padding: 0 .5rem;
-}
-
-.dark-mode {
-  background-color: var(--bg-color-dark);
-  color: var(--text-color-dark);
-  border-color: var(--color2);
 }
 
 .container {

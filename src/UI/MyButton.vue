@@ -16,38 +16,53 @@ export default {
     padding: 0;
     box-sizing: border-box;
 }
+
 button {
-    background-color: var(--bg-color);
-    color: var(--text-color);
     padding: 0.5rem 1rem;
-    border: 0.1rem solid var(--text-color);
-    transition: background-color .2s, 
-                color .2s;
     cursor: pointer;
     word-break: normal;
+    border-style: solid;
+    border-width: 0.1rem;
 }
 
-button:hover {
-    border: 0.1rem solid var(--text-color);
-    background-color:  var(--bg-color);
-    color: var(--text-color);
+.light-mode button {
+    background-color: rgb(230, 255, 255);
+    color: rgb(0, 50, 50);
+    border-color: rgb(0, 50, 50);
+}
+
+.dark-mode button {
+    background-color: rgb(0, 50, 50);
+    color: rgb(230, 255, 255);
+    border-color: rgb(230, 255, 255);
+}
+
+.light-mode button:hover {
+    background-color: rgb(0, 50, 50);
+    color: rgb(230, 255, 255);
+    border-color: rgb(230, 255, 255);
+}
+
+.dark-mode button:hover {
+    background-color: rgb(230, 255, 255);
+    color: rgb(0, 50, 50);
+    border-color: rgb(0, 50, 50);
 }
 
 button:active {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 button:disabled {
-    background-color: rgba(0,0,0,.5);
     cursor: auto;
+    opacity: 0.3;
 }
 
-button:disabled:hover {
-    color:  var(--text-color-dark);
-}
-
-button:active {
-    background-color: rgba(0,0,0,.5);
-    opacity: 1;
+button:disabled:hover,
+button:disabled:active {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+    opacity: 0.3;
 }
 </style>
