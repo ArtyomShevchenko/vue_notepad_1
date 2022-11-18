@@ -28,14 +28,12 @@ export default {
     },
     mounted() {
         if (localStorage.theme) {
-            document.body.classList.add(localStorage.theme)
-            console.log("mounted change", localStorage.theme)
+            this.theme = localStorage.theme
         }
     },
     watch: {
         theme(newTheme) {
             localStorage.theme = newTheme;
-            console.log("localStorage change", localStorage.theme)
         }
     }
 }

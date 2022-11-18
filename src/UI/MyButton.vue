@@ -17,10 +17,10 @@ export default {
     box-sizing: border-box;
 }
 button {
-    background-color:  var(--bg-color-dark);
-    color: var(--text-color-dark);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 0.5rem 1rem;
-    border: 0.1rem solid var(--bg-color-dark);
+    border: 0.1rem solid var(--text-color);
     transition: background-color .2s, 
                 color .2s;
     cursor: pointer;
@@ -28,14 +28,26 @@ button {
 }
 
 button:hover {
-    border: 0.1rem solid var(--bg-color-dark);
+    border: 0.1rem solid var(--text-color);
     background-color:  var(--bg-color);
     color: var(--text-color);
 }
 
 button:active {
-    background-color:  var(--bg-color-dark);
-    color: var(--text-color-dark);
-    opacity: 0.7;
+    opacity: 0.5;
+}
+
+button:disabled {
+    background-color: rgba(0,0,0,.5);
+    cursor: auto;
+}
+
+button:disabled:hover {
+    color:  var(--text-color-dark);
+}
+
+button:active {
+    background-color: rgba(0,0,0,.5);
+    opacity: 1;
 }
 </style>

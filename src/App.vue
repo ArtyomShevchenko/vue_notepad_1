@@ -2,10 +2,10 @@
   <div class="container wrapper">
 
     <!-- test localstorage -->
-    <div>
+    <!-- <div>
       <MyInput @keydown.enter="changeUserName" placeholder="Enter your name"/>
       <p>Hello {{userName}}</p>
-    </div>
+    </div> -->
     <!-- end test -->
 
     <header>
@@ -13,63 +13,45 @@
       <ToggleTheame />
     </header>
     <!-- form -->
-    <PostForm @formData="addPost" />
-    <PostList :posts="posts" :remove="removePost" v-if="posts.length" />
+    <noteForm @formData="addNotes" />
+    <notesList :notes="notes" :remove="removePost" v-if="notes.length" />
     <div v-else class="error">
-      <h3>Posts not found.</h3>
-      <MyButton @click="fetchPosts" v-if="!posts.length">Get post</MyButton>
+      <h3>Notes not found.</h3>
       <div v-if="loading">{{ loadingText }}</div>
     </div>
-
   </div>
 </template>
 
 
 <script>
 // import components
-import PostForm from "@/Components/PostForm.vue";
-import PostList from "@/Components/PostList.vue";
+import noteForm from "@/Components/noteForm.vue";
+import notesList from "@/Components/notesList.vue";
 import ToggleTheame from "@/Components/ToggleTheame.vue";
 
 // import UI element
-import MyButton from "@/UI/MyButton.vue";
-import MyInput from "@/UI/MyInput.vue";
 
 export default {
-  components: { PostList, PostForm, MyButton, ToggleTheame, MyInput },
+  components: {
+    notesList,
+    noteForm,
+    ToggleTheame,
+  },
   data() {
     return {
-      count: 101,
-      posts: [],
+      notes: [],
       loading: true,
       loadingText: "Loading.",
-      userName: "",
     }
   },
   methods: {
-    changeUserName(event) {
-      this.userName = event.target.value
-      localStorage.userName = this.userName
-    },
-    incrementCount() {
-      this.count += 1
-    },
-    addPost(post) {
-      console.log(post)
-      this.posts.unshift(post)
-      console.log(this.posts)
+    addNotes(post) {
+      this.notes.unshift(post)
+      this.setLocalNotes()
     },
     removePost(index) {
-      this.posts.splice(index, 1)
-    },
-    async fetchPosts() {
-      this.loading = true
-      setTimeout(() => {
-        fetch(`https://jsonplaceholder.typicode.com/posts?_limit=10`)
-          .then(response => response.json())
-          .then(data => this.posts = [...data])
-        this.loading = false
-      }, 5000)
+      this.notes.splice(index, 1)
+      this.setLocalNotes()
     },
     loadingStatus() {
       setInterval(() => {
@@ -78,24 +60,21 @@ export default {
         }
         this.loadingText += "."
       }, 500)
-    }
-  },
-  watch: {
-    loading(value) {
-      if (value) {
-        this.loadingStatus()
-      }
+    },
+    setLocalNotes() {
+      localStorage.notes = JSON.stringify(this.notes)
     }
   },
   mounted() {
-    this.fetchPosts()
 
     if (this.loading) {
       this.loadingStatus()
     }
 
-    if (localStorage.userName) {
-      this.userName = localStorage.userName;
+    if (localStorage.notes) {
+      this.loadingStatus = true
+      this.notes = JSON.parse(localStorage.notes)
+      this.loadingStatus = false
     }
   },
 }
@@ -104,12 +83,8 @@ export default {
 <style>
 :root {
   --bg-color: #fff;
-  --bg-color-dark: #000;
   --text-color: #000;
-  --text-color-dark: #fff;
-  --color: red;
-  --color2: green;
-  --color3: blue;
+  --border-color: red;
 }
 
 * {
@@ -118,7 +93,8 @@ export default {
   box-sizing: border-box;
 }
 
-body {
+body,
+.light.theme {
   background-color: var(--bg-color);
   color: var(--text-color);
   border-color: var(--color);

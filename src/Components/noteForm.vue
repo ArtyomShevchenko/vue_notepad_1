@@ -1,7 +1,6 @@
 <template>
     <div class="form-container">
-        <MyButton @click="toggleForm">{{textInShowForm}}</MyButton>
-        <form v-if="showForm">
+        <form>
             <MyInput type="text" :value="data.title" @input="changeTitle" placeholder="Title" />
             <MyTextarea :value="data.body" @input="changeBody" cols="30" rows="6" placeholder="Message">
             </MyTextarea>
@@ -18,7 +17,7 @@ import MyInput from "@/UI/MyInput.vue";
 import MyTextarea from "@/UI/MyTextarea.vue";
 
 export default {
-    name: "PostForm",
+    name: "noteForm",
     components: { MyButton, MyInput, MyTextarea },
     data() {
         return {
@@ -26,10 +25,10 @@ export default {
                 id: Date.now(),
                 title: "",
                 body: "",
+                date: "",
             },
             disabledButton: true,
             count: 0,
-            showForm: false,
         }
     },
     methods: {
@@ -44,21 +43,19 @@ export default {
         sendForm(event) {
             event.preventDefault()
 
+            this.setDate()
+
             this.$emit("formData", { ...this.data })
 
             this.data.title = ""
             this.data.body = ""
             this.disabledButton = true
         },
-        toggleForm() {
-            this.showForm = !this.showForm
+        setDate() {
+            const date = new Date()
+            this.data.date = date.toString()
         }
     },
-    computed: {
-        textInShowForm() {
-            return this.showForm ? "Hide form" : "Show form"
-        },
-    }
 }
 </script>
 

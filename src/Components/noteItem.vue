@@ -1,11 +1,12 @@
 <template>
     <section>
-        <div>
-            <h3>{{ post.title }}</h3>
+        <div class="content">
+            <h3>{{ note.title }}</h3>
             <br>
-            <p>{{ post.body }}</p>
+            <p>{{ note.body }}</p>
         </div>
-        <div>
+        <div class="option">
+            <p>{{ note.date }}</p>
             <MyButton @click="remove(index)">Delete</MyButton>
         </div>
     </section>
@@ -18,7 +19,7 @@ export default {
     name: "NoteItem",
     components: { MyButton },
     props: {
-        post: {
+        note: {
             type: Object,
             require: true,
         },
@@ -31,39 +32,37 @@ export default {
             require: true,
         },
     },
-    methods: {
-        // removePost(index) {
-        //     this.removePostClass = "red"
-        //     setTimeout(() => this.remove(index), 1000)
-        // }
-    }
 }
 </script>
 
 <style scoped>
 section {
-    padding: 0.5rem 0;
     background-color: inherit;
     border-bottom: 0.1rem solid inherit;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 1rem;
     overflow: hidden;
     min-height: 100px;
+    border: 0.1rem dotted lightgray
 }
 
 section b {
     font-size: 0.5rem;
 }
 
-div,
-h3 {
-    word-break: break-all;
+.content,
+.option {
+    padding: 1rem;
+    min-height: 4rem;
 }
 
-div::first-letter,
-h3::first-letter {
-    text-transform: uppercase;
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: rgba(0,0,0, .03);
+    font-size: .7rem;
 }
 </style>

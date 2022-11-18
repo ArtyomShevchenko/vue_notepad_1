@@ -1,9 +1,9 @@
 <template>
     <div class="list">
-        <PostItem 
-        v-for="(post, index) in posts" 
-        :key="post.id" 
-        :post="post" 
+        <noteItem 
+        v-for="(note, index) in notes" 
+        :key="note.id" 
+        :note="note" 
         :index="index" 
         :remove="remove" 
         />
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import PostItem from "@/Components/PostItem.vue";
+import noteItem from "@/Components/noteItem.vue";
 
 export default {
-    name: "PostList",
-    components: { PostItem },
+    name: "notesList",
+    components: { noteItem },
     props: {
-        posts: {
+        notes: {
             type: Array,
             require: true,
         },
